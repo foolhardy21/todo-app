@@ -1,3 +1,6 @@
 const STORAGE_KEY = 'projects'
-
-export default STORAGE_KEY
+const TASK_KEY = 'tasks'
+export {
+    TASK_KEY,
+    STORAGE_KEY
+} 

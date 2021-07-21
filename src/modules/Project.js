@@ -1,4 +1,4 @@
-import STORAGE_KEY from "./Constants"
+import {STORAGE_KEY} from "./Constants"
 import StorageProjects from "./Storage"
 
 function Project() {
@@ -13,42 +13,43 @@ function Project() {
 
         return project
     }
+    const AppendProjectsToContainer = (projectsArr,projectsDiv) => {
+        
+        for(let i = 0; i < projectsArr.length; i++) {
+            const item = document.createElement('li')
+            item.setAttribute('data-id',projectsArr[i].id)
+            item.setAttribute('id','project-item')
+            item.innerText = projectsArr[i].name
+            projectsDiv.appendChild(item)
+        }
+        return projectsDiv
+    }
     const makeProjectList = (projectsArr) => {
 
         const projectsDiv = document.createElement('ul')
         projectsDiv.setAttribute('id','projects-list')
         
-        for(let i = 0; i < projectsArr.length; i++) {
-            const item = document.createElement('li')
-            item.innerText = projectsArr[i].name
-            projectsDiv.appendChild(item)
-        }
-        return projectsDiv
+        return AppendProjectsToContainer(projectsArr, projectsDiv)
         
     }
     const getProjectsContainer = () => document.querySelector('#projects-list')
     
     const removeProjects = () => {
 
-        const projectsList = getProjectsContainer()
+        const projectsContainer = getProjectsContainer()
         
-        while(projectsList.firstChild) {
-            projectsList.removeChild(projectsList.firstChild)
+        while(projectsContainer.firstChild) {
+            projectsContainer.removeChild(projectsContainer.firstChild)
         }
     }
     const updateProjectListDisplay = (projectsArr) => {
         
         removeProjects()
 
-        const newProjectsContainer = getProjectsContainer() 
+        const ProjectsContainer = getProjectsContainer() 
         
-        for(let i = 0; i < projectsArr.length; i++) {
-            const item = document.createElement('li')
-            item.innerText = projectsArr[i].name
-            newProjectsContainer.appendChild(item)
-        }
+        return AppendProjectsToContainer(projectsArr, ProjectsContainer)
 
-        return newProjectsContainer
     }
 
     return { getProject, makeProjectList, updateProjectListDisplay }

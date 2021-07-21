@@ -6,10 +6,13 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    display: flex;
 
-    nav {
-        height: 20vh;
-        background: blue;
+    #project-content {
+        width: 30vw;
+    }
+    #task-content {
+        width: 80vw;
     }
     
 }
