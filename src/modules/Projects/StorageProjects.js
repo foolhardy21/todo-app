@@ -24,9 +24,14 @@ function StorageProjects() {
         } 
 
     }
-    const updateData = (dataObj) => {
+    const updateData = (dataObj,op) => {
+        if(op == 'add') {
+            projectsArr.push(dataObj)
+        }
+        else if(op == 'del') {
+            projectsArr = projectsArr.filter( item => item.id != dataObj.id )
+        }
         
-        projectsArr.push(dataObj)
         localStorage.setItem( STORAGE_KEY, JSON.stringify(projectsArr) )
     
     }

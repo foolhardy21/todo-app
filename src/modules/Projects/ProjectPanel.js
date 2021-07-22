@@ -22,7 +22,7 @@ const projectPanel = (() => {
         const inputValue = projectFormObj.getInputValue()    
         const inputValueObj = projectObj.getProject(inputValue) 
         
-        storage.updateData(inputValueObj)
+        storage.updateData(inputValueObj,'add')
         projectFormObj.setInputValue('')
         
         const newProjectDiv = projectObj.updateProjectListDisplay(storage.getArray())
