@@ -1,22 +1,17 @@
-import { projectPanelDiv, projectFormEventListener } from './modules/Projects/ProjectPanel'
-import {taskPanelDiv, projectHoverListener, taskSubmitListener} from './modules/Tasks/TaskPanel'
+import projectPanel  from './modules/Projects/ProjectPanel'
+import taskPanel from './modules/Tasks/TaskPanel'
 
 const contentDiv = document.querySelector('#content')
-contentDiv.appendChild(projectPanelDiv)
-contentDiv.appendChild(taskPanelDiv)
+contentDiv.appendChild(projectPanel.getPanelDiv())
+contentDiv.appendChild(taskPanel.getPanelDiv())
 
 document.querySelector('#project-form')
-            .addEventListener('submit',projectFormEventListener)
+            .addEventListener('submit',projectPanel.projectFormEventListener)
 
             
 document.querySelector('#projects-list')
-            .addEventListener('mouseover',projectHoverListener)
+            .addEventListener('mouseover',taskPanel.projectHoverListener)
 
 
 document.querySelector('#task-form')
-            .addEventListener('submit',taskSubmitListener)
-
-
-
-
-
+            .addEventListener('submit',taskPanel.taskSubmitListener)

@@ -2,50 +2,60 @@ import TaskForm from './TaskForm'
 import Task from './Task'
 import StorageTasks from './StorageTasks'
 
-const taskform = TaskForm()
-const taskobj = Task()
-const storagetasks = StorageTasks()
-
-const taskPanelDiv = document.createElement('div')
-taskPanelDiv.setAttribute('id','task-content')
-
-let currentProjectId = 0
-taskPanelDiv.appendChild( taskform.makeForm() )
-const heading = document.createElement('div')
-heading.setAttribute('id','task-heading')
-heading.innerText = ''
-taskPanelDiv.appendChild(heading)
-taskPanelDiv.appendChild( taskobj.makeTaskList( storagetasks.getArray(currentProjectId) ) ) 
 
 
-function projectHoverListener(e) {
-        const p = e.target
-        currentProjectId = parseInt(p.getAttribute('data-id'))
-        const previousheading = document.querySelector('#task-heading')
-        previousheading.innerText = p.innerText
+
+const taskPanel = (() => {
+
+    const taskform = TaskForm()
+    const taskobj = Task()
+    const storagetasks = StorageTasks()
+    const taskPanelDiv = document.createElement('div')
+    const heading = document.createElement('div')
+    let currentProjectId = 0
+
+    const initialisePanel = () => {
+        taskPanelDiv.setAttribute('id','task-content')
+        taskPanelDiv.appendChild( taskform.makeForm() )
+        heading.setAttribute('id','task-heading')
+        heading.innerText = ''
+        taskPanelDiv.appendChild( heading )
+        taskPanelDiv.appendChild( taskobj.makeTaskList( storagetasks.getArray(currentProjectId) ) ) 
+
+    }
+    const projectHoverListener = (e) => {
+        const currentProject = e.target
+        currentProjectId = parseInt(currentProject.getAttribute('data-id'))
+        const headingDiv = document.querySelector('#task-heading')
+        headingDiv.innerText = currentProject.innerText
 
         const newTaskDiv = taskobj.updateTaskListDisplay(storagetasks.getArray(currentProjectId))
         taskPanelDiv.appendChild(heading)
         taskPanelDiv.appendChild(newTaskDiv)
-}
-
-
-function taskSubmitListener(e) {
-    e.preventDefault()
-
-    const inputvalue = taskform.getInputValue()
-    const inputvalueobj = taskobj.getTask(inputvalue,currentProjectId)
+    }
+    const taskSubmitListener = (e) => {
+        e.preventDefault()
     
-
-    storagetasks.updateData(inputvalueobj)
-    taskform.setInputValue('')
+        const inputvalue = taskform.getInputValue()
+        const inputvalueobj = taskobj.getTask(inputvalue,currentProjectId)
+        
     
-    const newTaskDiv = taskobj.updateTaskListDisplay(storagetasks.getArray(currentProjectId))
-    taskPanelDiv.appendChild(newTaskDiv)
+        storagetasks.updateData(inputvalueobj)
+        taskform.setInputValue('')
+        
+        const newTaskDiv = taskobj.updateTaskListDisplay(storagetasks.getArray(currentProjectId))
+        taskPanelDiv.appendChild(newTaskDiv)
+    
+    }
+    const getPanelDiv = () => {
+        return taskPanelDiv
+    }
 
-}
-export {
-    taskPanelDiv,
-    projectHoverListener,
-    taskSubmitListener
-} 
+    return { initialisePanel, getPanelDiv, projectHoverListener, taskSubmitListener }
+
+})()
+
+
+taskPanel.initialisePanel()
+
+export default taskPanel
