@@ -3,13 +3,15 @@ import StorageTasks from "./StorageTasks"
 
 function Task() {
 
-    const getTask = (name,projectid) => {
+    const getTask = (name, priority, date, projectid) => {
 
         const task = {}
         const storage = StorageTasks()
         const dataSize = storage.getDataLength(TASK_KEY)
         task.name = name
         task.id = dataSize
+        task.priority = priority
+        task.duedate = date
         task.projectid = projectid
 
         return task
@@ -20,7 +22,7 @@ function Task() {
             const item = document.createElement('li')
             item.setAttribute('data-id',tasksArr[i].id)
             item.setAttribute('id','task-item')
-            item.innerText = `${tasksArr[i].name}`
+            item.innerText = `${tasksArr[i].name} ${tasksArr[i].priority} ${tasksArr[i].duedate}`
             tasksDiv.appendChild(item)
         }
         return tasksDiv

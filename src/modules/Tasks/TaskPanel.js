@@ -39,12 +39,15 @@ const taskPanel = (() => {
     const taskSubmitListener = (e) => {
         e.preventDefault()
     
-        const inputvalue = taskform.getInputValue()
-        const inputvalueobj = taskobj.getTask(inputvalue,currentProjectId)
+        const titlevalue = taskform.getTitleValue()
+        const priorityvalue = taskform.getPriorityValue()
+        const datevalue = taskform.getDateValue()
+        
+        const inputvalueobj = taskobj.getTask(titlevalue, priorityvalue, datevalue, currentProjectId)
         
     
         storagetasks.updateData(inputvalueobj)
-        taskform.setInputValue('')
+        taskform.setTitleValue('')
         
         const newTaskDiv = taskobj.updateTaskListDisplay(storagetasks.getArray(currentProjectId))
         taskPanelDiv.appendChild(newTaskDiv)
