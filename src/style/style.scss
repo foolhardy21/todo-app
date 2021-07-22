@@ -6,13 +6,17 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    display: flex;
 
-    #project-content {
-        width: 30vw;
+
+    #content {
+        display: flex;
+        #project-content {
+            width: 30vw;
+        }
+        #task-content {
+            width: 80vw;
+        }
     }
-    #task-content {
-        width: 80vw;
-    }
+    
     
 }

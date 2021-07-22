@@ -1,5 +1,5 @@
-import {STORAGE_KEY} from "./Constants"
-import StorageProjects from "./Storage"
+import {STORAGE_KEY} from "../Constants"
+import StorageProjects from "./StorageProjects"
 
 function Project() {
 

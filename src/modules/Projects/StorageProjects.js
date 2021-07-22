@@ -1,4 +1,4 @@
-import {STORAGE_KEY} from "./Constants"
+import {STORAGE_KEY} from "../Constants"
 
 function StorageProjects() {
 
