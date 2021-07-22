@@ -11,8 +11,8 @@ document.querySelector('#project-form')
             
 document.querySelector('#projects-list')
             .addEventListener('mouseover',taskPanel.projectHoverListener)
-
+document.querySelector('#projects-list')
+            .addEventListener('click', projectPanel.projectDelListener)  
 
 document.querySelector('#task-form')
             .addEventListener('submit',taskPanel.taskSubmitListener)
-

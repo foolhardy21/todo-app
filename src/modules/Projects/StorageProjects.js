@@ -39,9 +39,20 @@ function StorageProjects() {
         updateArray()
         return projectsArr 
     }
+    const removeProject = (id) => {
+        updateArray()
+        const dataObj = projectsArr.find(item => item.id == id)
+        updateData(dataObj,'del')
+        
+        return projectsArr
+    }
+    const addProject = (dataObj) => {
+        updateArray()
+        updateData(dataObj, 'add')
+    }
     
 
-    return {getDataLength, updateData, getArray }
+    return {getDataLength, getArray, removeProject, addProject }
     
 }
 export default StorageProjects

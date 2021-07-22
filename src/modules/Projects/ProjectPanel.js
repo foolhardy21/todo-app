@@ -22,7 +22,7 @@ const projectPanel = (() => {
         const inputValue = projectFormObj.getInputValue()    
         const inputValueObj = projectObj.getProject(inputValue) 
         
-        storage.updateData(inputValueObj,'add')
+        storage.addProject(inputValueObj)
         projectFormObj.setInputValue('')
         
         const newProjectDiv = projectObj.updateProjectListDisplay(storage.getArray())
@@ -32,9 +32,20 @@ const projectPanel = (() => {
     const getPanelDiv = () => {
         return projectPanelDiv
     }
+    const projectDelListener = (e) => {
+        e.preventDefault()
+        if ( e.target.id == 'project-delete' ) {
+            
+            const id = parseInt(e.target.getAttribute('data-id'))
+        
+            const newProjectDiv = projectObj.updateProjectListDisplay(storage.removeProject(id))
+            projectPanelDiv.appendChild(newProjectDiv)
+        }
+        
+    }
 
 
-    return { initialisePanel, projectFormEventListener, getPanelDiv }
+    return { initialisePanel, projectFormEventListener, getPanelDiv, projectDelListener }
 
 })()
 
