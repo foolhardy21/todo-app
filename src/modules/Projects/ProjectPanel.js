@@ -2,7 +2,6 @@ import StorageProjects from './StorageProjects'
 import ProjectForm from './ProjectForm'
 import Project from './Project'
 
-
 const projectPanel = (() => {
     
     const projectPanelDiv = document.createElement('div')
@@ -40,6 +39,7 @@ const projectPanel = (() => {
         
             const newProjectDiv = projectObj.updateProjectListDisplay(storage.removeProject(id))
             projectPanelDiv.appendChild(newProjectDiv)
+
         }
         
     }

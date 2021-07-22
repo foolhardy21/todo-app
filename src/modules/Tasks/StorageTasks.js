@@ -36,9 +36,16 @@ function StorageTasks() {
         const specifictasks = tasksArr.filter(task => task.projectid == projectid)
         return specifictasks 
     }
+    const removeTask = (projectid) => {
+        updateArray()
+        const newtasks = tasksArr.filter(task => task.projectid != projectid)
+
+        localStorage.setItem( TASK_KEY, JSON.stringify(newtasks) )
+        
+    }
     
 
-    return {getDataLength, updateData, getArray }
+    return {getDataLength, updateData, getArray, removeTask }
     
 }
 export default StorageTasks

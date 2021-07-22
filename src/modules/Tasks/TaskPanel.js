@@ -24,14 +24,17 @@ const taskPanel = (() => {
 
     }
     const projectHoverListener = (e) => {
-        const currentProject = e.target
-        currentProjectId = parseInt(currentProject.getAttribute('data-id'))
-        const headingDiv = document.querySelector('#task-heading')
-        headingDiv.innerText = currentProject.innerText
 
-        const newTaskDiv = taskobj.updateTaskListDisplay(storagetasks.getArray(currentProjectId))
-        taskPanelDiv.appendChild(heading)
-        taskPanelDiv.appendChild(newTaskDiv)
+        if(e.target.tagName == 'LI') {
+            const currentProject = e.target
+            currentProjectId = parseInt(currentProject.getAttribute('data-id'))
+            const headingDiv = document.querySelector('#task-heading')
+            headingDiv.innerText = currentProject.innerText.slice(0,-3)
+    
+            const newTaskDiv = taskobj.updateTaskListDisplay(storagetasks.getArray(currentProjectId))
+            taskPanelDiv.appendChild(heading)
+            taskPanelDiv.appendChild(newTaskDiv)
+        }
     }
     const taskSubmitListener = (e) => {
         e.preventDefault()
@@ -45,7 +48,7 @@ const taskPanel = (() => {
         
         const newTaskDiv = taskobj.updateTaskListDisplay(storagetasks.getArray(currentProjectId))
         taskPanelDiv.appendChild(newTaskDiv)
-    
+            
     }
     const getPanelDiv = () => {
         return taskPanelDiv

@@ -1,4 +1,5 @@
 import {STORAGE_KEY} from "../Constants"
+import StorageTasks from '../Tasks/StorageTasks'
 
 function StorageProjects() {
 
@@ -43,6 +44,9 @@ function StorageProjects() {
         updateArray()
         const dataObj = projectsArr.find(item => item.id == id)
         updateData(dataObj,'del')
+
+        const storagetask = StorageTasks()
+        storagetask.removeTask(id)
         
         return projectsArr
     }
