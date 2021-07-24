@@ -1,51 +1,53 @@
-import {TASK_KEY} from "../Constants"
+import { TASK_KEY } from "../Constants";
 
 function StorageTasks() {
+  let tasksArr = [];
 
-    let tasksArr = []
-
-    const getData = () => {
-
-        const data = localStorage.getItem(TASK_KEY)
-        return JSON.parse(data)
-    
+  const getData = () => {
+    const data = localStorage.getItem(TASK_KEY);
+    return JSON.parse(data);
+  };
+  const getDataLength = () => {
+    const storage = getData();
+    const lastid = storage[storage.length - 1]["id"];
+    return lastid + 1;
+  };
+  const updateArray = () => {
+    const storedArr = getData(TASK_KEY);
+    if (storedArr) {
+      tasksArr = storedArr;
     }
-    const getDataLength = () => {
-        
-        const storage = getData()
-        return ( storage ) ? storage.length : 0
-        
-    }    
-    const updateArray = () => {
- 
-        const storedArr = getData(TASK_KEY)
-        if ( storedArr ) {
-            tasksArr = storedArr
-        } 
-
+  };
+  const updateData = (dataObj, type) => {
+    if (type == "add") {
+      tasksArr.push(dataObj);
+    } else if (type == "del") {
+      tasksArr = tasksArr.filter((item) => item.id != dataObj.id);
     }
-    const updateData = (dataObj) => {
-        // updateArray()
-        tasksArr.push(dataObj)
-        localStorage.setItem( TASK_KEY, JSON.stringify(tasksArr) )
-    
-    }
-    const getArray = (projectid) => {
-        updateArray()
+    localStorage.setItem(TASK_KEY, JSON.stringify(tasksArr));
+  };
+  const getArray = (projectid) => {
+    updateArray();
 
-        const specifictasks = tasksArr.filter(task => task.projectid == projectid)
-        return specifictasks 
-    }
-    const removeTask = (projectid) => {
-        updateArray()
-        const newtasks = tasksArr.filter(task => task.projectid != projectid)
+    const specifictasks = tasksArr.filter(
+      (task) => task.projectid == projectid
+    );
+    return specifictasks;
+  };
+  const removeTasks = (projectid) => {
+    updateArray();
+    const newtasks = tasksArr.filter((task) => task.projectid != projectid);
 
-        localStorage.setItem( TASK_KEY, JSON.stringify(newtasks) )
-        
-    }
-    
+    localStorage.setItem(TASK_KEY, JSON.stringify(newtasks));
+  };
+  const removeTask = (id) => {
+    updateArray();
+    const dataObj = tasksArr.find((item) => item.id == id);
+    updateData(dataObj, "del");
 
-    return {getDataLength, updateData, getArray, removeTask }
-    
+    return tasksArr;
+  };
+
+  return { getDataLength, updateData, getArray, removeTasks, removeTask };
 }
-export default StorageTasks
+export default StorageTasks;
