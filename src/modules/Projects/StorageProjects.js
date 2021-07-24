@@ -8,12 +8,6 @@ function StorageProjects() {
     const data = localStorage.getItem(STORAGE_KEY);
     return JSON.parse(data);
   };
-  const getDataLength = () => {
-    const storage = getData();
-    const lastid = storage[storage.length - 1]["id"];
-
-    return lastid + 1;
-  };
   const updateArray = () => {
     const storedArr = getData(STORAGE_KEY);
     if (storedArr) {
@@ -48,6 +42,6 @@ function StorageProjects() {
     updateData(dataObj, "add");
   };
 
-  return { getDataLength, getArray, removeProject, addProject };
+  return { getArray, removeProject, addProject };
 }
 export default StorageProjects;

@@ -1,16 +1,6 @@
-import { STORAGE_KEY } from "../Constants";
-import StorageProjects from "./StorageProjects";
+const projectlist = (() => {
+  const projectsDiv = document.createElement("ul");
 
-function Project() {
-  const getProject = (name) => {
-    const project = {};
-    const storage = StorageProjects();
-    const dataSize = storage.getDataLength(STORAGE_KEY);
-    project.name = name;
-    project.id = dataSize;
-
-    return project;
-  };
   const AppendProjectsToContainer = (projectsArr, projectsDiv) => {
     for (let i = 0; i < projectsArr.length; i++) {
       const item = document.createElement("li");
@@ -24,32 +14,32 @@ function Project() {
       item.appendChild(deleteBtn);
       projectsDiv.appendChild(item);
     }
-    return projectsDiv;
   };
   const makeProjectList = (projectsArr) => {
-    const projectsDiv = document.createElement("ul");
     projectsDiv.setAttribute("id", "projects-list");
-
-    return AppendProjectsToContainer(projectsArr, projectsDiv);
+    AppendProjectsToContainer(projectsArr, projectsDiv);
   };
   const getProjectsContainer = () => document.querySelector("#projects-list");
 
   const removeProjects = () => {
     const projectsContainer = getProjectsContainer();
-
     while (projectsContainer.firstChild) {
       projectsContainer.removeChild(projectsContainer.firstChild);
     }
   };
-  const updateProjectListDisplay = (projectsArr) => {
+  const updateProjectListDiv = (projectsArr) => {
     removeProjects();
-
     const ProjectsContainer = getProjectsContainer();
+    AppendProjectsToContainer(projectsArr, ProjectsContainer);
 
-    return AppendProjectsToContainer(projectsArr, ProjectsContainer);
+    return projectsDiv;
+  };
+  const getProjectsListDiv = (projectsArr) => {
+    makeProjectList(projectsArr);
+    return projectsDiv;
   };
 
-  return { getProject, makeProjectList, updateProjectListDisplay };
-}
+  return { getProjectsListDiv, updateProjectListDiv };
+})();
 
-export default Project;
+export default projectlist;
