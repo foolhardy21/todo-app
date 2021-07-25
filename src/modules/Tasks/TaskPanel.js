@@ -1,39 +1,43 @@
-import TaskForm from "./TaskForm";
-import Task from "./Task";
-import StorageTasks from "./StorageTasks";
+import taskform from "./TaskForm";
+// import Task from "./Task";
+// import StorageTasks from "./StorageTasks";
+import taskmodel from "./Model";
+import tasklist from "./TasksList";
 
 const taskPanel = (() => {
-  const taskform = TaskForm();
-  const taskobj = Task();
-  const storagetasks = StorageTasks();
+  // const taskform = TaskForm();
+  // const taskobj = Task();
+  // const storagetasks = StorageTasks();
   const taskPanelDiv = document.createElement("div");
   const heading = document.createElement("div");
-  let currentProjectId = 0;
+  let currentProjectId = 1;
 
   const initialisePanel = () => {
     taskPanelDiv.setAttribute("id", "task-content");
-    taskPanelDiv.appendChild(taskform.makeForm());
-    heading.setAttribute("id", "task-heading");
-    heading.innerText = "";
-    taskPanelDiv.appendChild(heading);
-    taskPanelDiv.appendChild(
-      taskobj.makeTaskList(storagetasks.getArray(currentProjectId))
-    );
-  };
-  const projectHoverListener = (e) => {
-    if (e.target.tagName == "LI") {
-      const currentProject = e.target;
-      currentProjectId = parseInt(currentProject.getAttribute("data-id"));
-      const headingDiv = document.querySelector("#task-heading");
-      headingDiv.innerText = currentProject.innerText.slice(0, -3);
+    taskPanelDiv.appendChild(taskform.getForm());
 
-      const newTaskDiv = taskobj.updateTaskListDisplay(
-        storagetasks.getArray(currentProjectId)
-      );
-      taskPanelDiv.appendChild(heading);
-      taskPanelDiv.appendChild(newTaskDiv);
-    }
+    heading.setAttribute("id", "task-heading");
+    heading.innerText = taskmodel.getProjectName(currentProjectId);
+    taskPanelDiv.appendChild(heading);
+    const tasksListDiv = tasklist.makeTaskList(
+      taskmodel.getSpecificTasks(currentProjectId)
+    );
+    taskPanelDiv.appendChild(tasksListDiv);
   };
+  // const projectHoverListener = (e) => {
+  //   if (e.target.tagName == "LI") {
+  //     const currentProject = e.target;
+  //     currentProjectId = parseInt(currentProject.getAttribute("data-id"));
+  //     const headingDiv = document.querySelector("#task-heading");
+  //     headingDiv.innerText = currentProject.innerText.slice(0, -3);
+
+  //     const newTaskDiv = taskobj.updateTaskListDisplay(
+  //       storagetasks.getArray(currentProjectId)
+  //     );
+  //     taskPanelDiv.appendChild(heading);
+  //     taskPanelDiv.appendChild(newTaskDiv);
+  //   }
+  // };
   const taskSubmitListener = (e) => {
     e.preventDefault();
 
@@ -41,43 +45,39 @@ const taskPanel = (() => {
     const priorityvalue = taskform.getPriorityValue();
     const datevalue = taskform.getDateValue();
 
-    const inputvalueobj = taskobj.getTask(
+    const inputvalueobj = taskmodel.makeTaskObj(
       titlevalue,
       priorityvalue,
       datevalue,
       currentProjectId
     );
-
-    storagetasks.updateData(inputvalueobj, "add");
-    taskform.setTitleValue("");
-
-    const newTaskDiv = taskobj.updateTaskListDisplay(
-      storagetasks.getArray(currentProjectId)
-    );
+    const newTasksArray = taskmodel.storeTask(inputvalueobj);
+    const newTaskDiv = tasklist.updateTaskListDisplay(newTasksArray);
     taskPanelDiv.appendChild(newTaskDiv);
+    taskform.setTitleValue("");
   };
   const getPanelDiv = () => {
     return taskPanelDiv;
   };
-  const taskDelListener = (e) => {
-    e.preventDefault();
+  // const taskDelListener = (e) => {
+  //   e.preventDefault();
 
-    if (e.target.id == "task-delete") {
-      const id = parseInt(e.target.getAttribute("data-id"));
+  //   if (e.target.id == "task-delete") {
+  //     const id = parseInt(e.target.getAttribute("data-id"));
 
-      const newTaskDiv = taskobj.updateTaskListDisplay(
-        storagetasks.removeTask(id)
-      );
-      taskPanelDiv.appendChild(newTaskDiv);
-    }
-  };
+  //     const newTaskDiv = taskobj.updateTaskListDisplay(
+  //       storagetasks.removeTask(id)
+  //     );
+  //     taskPanelDiv.appendChild(newTaskDiv);
+  //   }
+  // };
 
   return {
     initialisePanel,
     getPanelDiv,
-    projectHoverListener,
+    // projectHoverListener,
     taskSubmitListener,
-    taskDelListener,
+    // taskDelListener,
   };
 })();
 

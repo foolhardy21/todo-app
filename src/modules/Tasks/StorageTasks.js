@@ -3,22 +3,19 @@ import { TASK_KEY } from "../Constants";
 function StorageTasks() {
   let tasksArr = [];
 
-  const getData = () => {
+  const getAllTasks = () => {
     const data = localStorage.getItem(TASK_KEY);
     return JSON.parse(data);
   };
-  const getDataLength = () => {
-    const storage = getData();
-    const lastid = storage[storage.length - 1]["id"];
-    return lastid + 1;
-  };
+
   const updateArray = () => {
-    const storedArr = getData(TASK_KEY);
+    const storedArr = getAllTasks(TASK_KEY);
     if (storedArr) {
       tasksArr = storedArr;
     }
   };
   const updateData = (dataObj, type) => {
+    updateArray();
     if (type == "add") {
       tasksArr.push(dataObj);
     } else if (type == "del") {
@@ -26,7 +23,7 @@ function StorageTasks() {
     }
     localStorage.setItem(TASK_KEY, JSON.stringify(tasksArr));
   };
-  const getArray = (projectid) => {
+  const getProjectTasks = (projectid) => {
     updateArray();
 
     const specifictasks = tasksArr.filter(
@@ -48,6 +45,6 @@ function StorageTasks() {
     return tasksArr;
   };
 
-  return { getDataLength, updateData, getArray, removeTasks, removeTask };
+  return { getAllTasks, getProjectTasks, updateData, removeTasks, removeTask };
 }
 export default StorageTasks;
