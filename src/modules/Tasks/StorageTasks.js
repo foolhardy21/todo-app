@@ -14,6 +14,7 @@ function StorageTasks() {
       tasksArr = storedArr;
     }
   };
+
   const updateData = (dataObj, type) => {
     updateArray();
     if (type == "add") {
@@ -23,26 +24,26 @@ function StorageTasks() {
     }
     localStorage.setItem(TASK_KEY, JSON.stringify(tasksArr));
   };
+
   const getProjectTasks = (projectid) => {
     updateArray();
-
     const specifictasks = tasksArr.filter(
       (task) => task.projectid == projectid
     );
     return specifictasks;
   };
+
   const removeTasks = (projectid) => {
     updateArray();
     const newtasks = tasksArr.filter((task) => task.projectid != projectid);
-
     localStorage.setItem(TASK_KEY, JSON.stringify(newtasks));
   };
+
   const removeTask = (id) => {
     updateArray();
     const dataObj = tasksArr.find((item) => item.id == id);
     updateData(dataObj, "del");
-
-    return tasksArr;
+    return getProjectTasks(dataObj.projectid);
   };
 
   return { getAllTasks, getProjectTasks, updateData, removeTasks, removeTask };

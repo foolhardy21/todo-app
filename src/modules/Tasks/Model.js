@@ -31,11 +31,15 @@ const taskmodel = (() => {
 
     return getSpecificTasks(taskobj.projectid);
   };
+  const deleteTask = (taskid) => {
+    return storageTasks.removeTask(taskid);
+  };
   return {
     getProjectName,
     getSpecificTasks,
     makeTaskObj,
     storeTask,
+    deleteTask,
   };
 })();
 

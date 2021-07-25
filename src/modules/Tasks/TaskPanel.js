@@ -1,13 +1,8 @@
 import taskform from "./TaskForm";
-// import Task from "./Task";
-// import StorageTasks from "./StorageTasks";
 import taskmodel from "./Model";
 import tasklist from "./TasksList";
 
 const taskPanel = (() => {
-  // const taskform = TaskForm();
-  // const taskobj = Task();
-  // const storagetasks = StorageTasks();
   const taskPanelDiv = document.createElement("div");
   const heading = document.createElement("div");
   let currentProjectId = 1;
@@ -24,6 +19,7 @@ const taskPanel = (() => {
     );
     taskPanelDiv.appendChild(tasksListDiv);
   };
+
   const showProjectTasks = (projectid, currentProject) => {
     currentProjectId = projectid;
     const headingDiv = document.querySelector("#task-heading");
@@ -35,6 +31,7 @@ const taskPanel = (() => {
     taskPanelDiv.appendChild(headingDiv);
     taskPanelDiv.appendChild(newTaskDiv);
   };
+
   const taskSubmitListener = (e) => {
     e.preventDefault();
 
@@ -53,28 +50,30 @@ const taskPanel = (() => {
     taskPanelDiv.appendChild(newTaskDiv);
     taskform.setTitleValue("");
   };
+
   const getPanelDiv = () => {
     return taskPanelDiv;
   };
-  // const taskDelListener = (e) => {
-  //   e.preventDefault();
 
-  //   if (e.target.id == "task-delete") {
-  //     const id = parseInt(e.target.getAttribute("data-id"));
+  const taskDelListener = (e) => {
+    e.preventDefault();
 
-  //     const newTaskDiv = taskobj.updateTaskListDisplay(
-  //       storagetasks.removeTask(id)
-  //     );
-  //     taskPanelDiv.appendChild(newTaskDiv);
-  //   }
-  // };
+    if (e.target.id == "task-delete") {
+      const taskid = parseInt(e.target.getAttribute("data-id"));
+
+      const newTaskDiv = tasklist.updateTaskListDisplay(
+        taskmodel.deleteTask(taskid)
+      );
+      taskPanelDiv.appendChild(newTaskDiv);
+    }
+  };
 
   return {
     initialisePanel,
     getPanelDiv,
     showProjectTasks,
     taskSubmitListener,
-    // taskDelListener,
+    taskDelListener,
   };
 })();
 

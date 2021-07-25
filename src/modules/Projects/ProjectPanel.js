@@ -13,6 +13,7 @@ const projectPanel = (() => {
     const projectsArray = projectmodel.getStoredProjects();
     projectPanelDiv.appendChild(projectlist.getProjectsListDiv(projectsArray));
   };
+
   const projectFormEventListener = (e) => {
     e.preventDefault();
     const inputValue = projectform.getInputValue();
@@ -21,17 +22,22 @@ const projectPanel = (() => {
     projectPanelDiv.appendChild(newProjectsDiv);
     projectform.setInputValue("");
   };
+
   const getPanelDiv = () => {
     return projectPanelDiv;
   };
+
   const projectDelListener = (e) => {
-    // e.preventDefault()
-    // if ( e.target.id == 'project-delete' ) {
-    //     const id = parseInt(e.target.getAttribute('data-id'))
-    //     const newProjectDiv = projectObj.updateProjectListDisplay(storage.removeProject(id))
-    //     projectPanelDiv.appendChild(newProjectDiv)
-    // }
+    e.preventDefault();
+    if (e.target.id == "project-delete") {
+      const projectid = parseInt(e.target.getAttribute("data-id"));
+      const newProjectDiv = projectlist.updateProjectListDiv(
+        projectmodel.deleteProject(projectid)
+      );
+      projectPanelDiv.appendChild(newProjectDiv);
+    }
   };
+
   const projectHoverListener = (e) => {
     if (e.target.id == "project-item") {
       const projectid = parseInt(e.target.getAttribute("data-id"));
@@ -43,7 +49,7 @@ const projectPanel = (() => {
     initialisePanel,
     projectFormEventListener,
     getPanelDiv,
-    // projectDelListener,
+    projectDelListener,
     projectHoverListener,
   };
 })();

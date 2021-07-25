@@ -8,12 +8,14 @@ function StorageProjects() {
     const data = localStorage.getItem(STORAGE_KEY);
     return JSON.parse(data);
   };
+
   const updateArray = () => {
     const storedArr = getData(STORAGE_KEY);
     if (storedArr) {
       projectsArr = storedArr;
     }
   };
+
   const updateData = (dataObj, op) => {
     if (op == "add") {
       projectsArr.push(dataObj);
@@ -23,20 +25,20 @@ function StorageProjects() {
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(projectsArr));
   };
+
   const getArray = () => {
     updateArray();
     return projectsArr;
   };
-  const removeProject = (id) => {
-    updateArray();
-    const dataObj = projectsArr.find((item) => item.id == id);
-    updateData(dataObj, "del");
 
-    const storagetask = StorageTasks();
-    storagetask.removeTasks(id);
+  const removeProject = (projectid) => {
+    updateArray();
+    const dataObj = projectsArr.find((item) => item.id == projectid);
+    updateData(dataObj, "del");
 
     return projectsArr;
   };
+
   const addProject = (dataObj) => {
     updateArray();
     updateData(dataObj, "add");
