@@ -1,6 +1,7 @@
 import projectform from "./ProjectForm";
 import projectmodel from "./Model";
 import projectlist from "./ProjectList";
+import taskPanel from "../Tasks/TaskPanel";
 
 const projectPanel = (() => {
   const projectPanelDiv = document.createElement("div");
@@ -31,12 +32,19 @@ const projectPanel = (() => {
     //     projectPanelDiv.appendChild(newProjectDiv)
     // }
   };
+  const projectHoverListener = (e) => {
+    if (e.target.id == "project-item") {
+      const projectid = parseInt(e.target.getAttribute("data-id"));
+      taskPanel.showProjectTasks(projectid, e.target);
+    }
+  };
 
   return {
     initialisePanel,
     projectFormEventListener,
     getPanelDiv,
-    // projectDelListener
+    // projectDelListener,
+    projectHoverListener,
   };
 })();
 

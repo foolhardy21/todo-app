@@ -8,9 +8,9 @@ contentDiv.appendChild(taskPanel.getPanelDiv());
 document
   .querySelector("#project-form")
   .addEventListener("submit", projectPanel.projectFormEventListener);
-// document
-//   .querySelector("#projects-list")
-//   .addEventListener("mouseover", taskPanel.projectHoverListener);
+document
+  .querySelector("#projects-list")
+  .addEventListener("mouseover", projectPanel.projectHoverListener);
 // document
 //   .querySelector("#projects-list")
 //   .addEventListener("click", projectPanel.projectDelListener);
