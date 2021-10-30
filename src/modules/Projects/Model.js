@@ -13,13 +13,16 @@ const projectmodel = (() => {
   };
 
   const getStoredProjects = () => {
-    return storage.getArray();
+    return storage.getArray() ? storage.getArray() : null;
   };
 
   const getnewId = () => {
     const storedprojects = getStoredProjects();
-    const lastid = storedprojects[storedprojects.length - 1]["id"];
+    if (storedprojects.length < 1) {
+      return 0
+    } 
 
+    const lastid = storedprojects[storedprojects.length - 1]["id"];
     return lastid + 1;
   };
 
